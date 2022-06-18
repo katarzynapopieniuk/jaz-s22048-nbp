@@ -19,6 +19,11 @@ public class GlobalRestControllerAdvice {
         return ResponseEntity.status(400).body("Bad request, message: " + e.getMessage());
     }
 
+    @ExceptionHandler(HttpClientErrorException.NotFound.class)
+    public ResponseEntity<String> handleNotFoundError(Exception e) {
+        return ResponseEntity.status(404).body("Data not found, message: " + e.getMessage());
+    }
+
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<String> handleClientError(Exception e) {
         return ResponseEntity.status(400).body("Problem with request, message: " + e.getMessage());
