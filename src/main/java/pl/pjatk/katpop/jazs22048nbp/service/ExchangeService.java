@@ -30,7 +30,8 @@ public class ExchangeService {
         Instant now = Instant.now();
         String requestUrl = prepareUrl(currency, startDate, endDate);
         ResponseEntity<ExchangeRatesSeries> response = restTemplate.getForEntity(requestUrl, ExchangeRatesSeries.class);
-        MeanCurrency meanCurrency = meanCurrencyFactory.getMeanCurrency(Objects.requireNonNull(response.getBody()), startDate, endDate, now);
+        MeanCurrency meanCurrency = meanCurrencyFactory.getMeanCurrency(Objects.requireNonNull(response.getBody()),
+                startDate, endDate, now);
         return exchangeRatesRepository.save(meanCurrency);
     }
 
