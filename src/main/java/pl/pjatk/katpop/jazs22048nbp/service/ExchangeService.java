@@ -7,6 +7,7 @@ import pl.pjatk.katpop.jazs22048nbp.configuration.Endpoint;
 import pl.pjatk.katpop.jazs22048nbp.exchange.mean.MeanCurrencyFactory;
 import pl.pjatk.katpop.jazs22048nbp.exchange.model.ExchangeRatesSeries;
 import pl.pjatk.katpop.jazs22048nbp.exchange.model.MeanCurrency;
+import pl.pjatk.katpop.jazs22048nbp.repository.ExchangeRatesRepository;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -16,12 +17,13 @@ public class ExchangeService {
 
     private final RestTemplate restTemplate;
     private final MeanCurrencyFactory meanCurrencyFactory;
-    //private final ExchangeRatesRepository exchangeRatesRepository;
+    private final ExchangeRatesRepository exchangeRatesRepository;
 
     public ExchangeService(RestTemplate restTemplate,
-                           MeanCurrencyFactory meanCurrencyFactory) {
+                           MeanCurrencyFactory meanCurrencyFactory, ExchangeRatesRepository exchangeRatesRepository) {
         this.restTemplate = restTemplate;
         this.meanCurrencyFactory = meanCurrencyFactory;
+        this.exchangeRatesRepository = exchangeRatesRepository;
     }
 
     public MeanCurrency getMeanCurrency(String currency, String startDate, String endDate) {
@@ -29,8 +31,7 @@ public class ExchangeService {
         String requestUrl = prepareUrl(currency, startDate, endDate);
         ResponseEntity<ExchangeRatesSeries> response = restTemplate.getForEntity(requestUrl, ExchangeRatesSeries.class);
         MeanCurrency meanCurrency = meanCurrencyFactory.getMeanCurrency(Objects.requireNonNull(response.getBody()), startDate, endDate, now);
-        return meanCurrency;
-        //return exchangeRatesRepository.save(meanCurrency);
+        return exchangeRatesRepository.save(meanCurrency);
     }
 
     private String prepareUrl(String currency, String startDate, String endDate) {

@@ -21,10 +21,10 @@ public class ExchangeRatesRestController {
     }
 
     @GetMapping("/mean/{currency}")
-    @ApiOperation(value = "Get mean currency exchange rate for last days")
-    public ResponseEntity<MeanCurrency> getAllMovies(@PathVariable String currency,
-                                                     @RequestParam String startDate,
-                                                     @RequestParam String endDate) {
+    @ApiOperation(value = "Get mean currency exchange rate for time interval between start and end dates")
+    public ResponseEntity<MeanCurrency> getMeanCurrencyForTimeInterval(@PathVariable String currency,
+                                                                       @RequestParam String startDate,
+                                                                       @RequestParam String endDate) {
         return ResponseEntity.ok(exchangeService.getMeanCurrency(currency, startDate, endDate));
     }
 }

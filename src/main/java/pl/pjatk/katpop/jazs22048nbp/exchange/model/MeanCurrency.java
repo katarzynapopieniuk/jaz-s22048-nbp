@@ -8,14 +8,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
 @ApiModel
+@Entity(name = "mean_currency")
 public class MeanCurrency {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "unique id of the mean currency")
     private Integer id;
     @ApiModelProperty(value = "currency code")
@@ -24,7 +32,7 @@ public class MeanCurrency {
     private String startDate;
     @ApiModelProperty(value = "date of the last day the mean was calculated for")
     private String endDate;
-    @ApiModelProperty(value = "time of request")
+    @ApiModelProperty(value = "date and time of request")
     private String timeStamp;
     @ApiModelProperty(value = "calculated mean")
     private Double mean;
