@@ -1,0 +1,8 @@
+###
+GET http://localhost:8080/exchange/mean/gbp?startDate=2020-11-11&endDate=2020-12-11
+
+###
+GET http://localhost:8080/swagger-ui.html
+
+###
+GET http://localhost:8080/exchange/mean/gbp?startDate=2020-11-11&endDate=2
